@@ -11,7 +11,7 @@ const Comment = require("./routes/comments")
 
 app.use(cors())
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   credentials: true,
   optionSuccessStatus: 200
 }
