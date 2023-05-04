@@ -1,36 +1,41 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
-const dotenv = require('dotenv');
-const cors = require('cors')
-const path = require('path')
+const dotenv = require("dotenv");
+const cors = require("cors");
+const path = require("path");
 ///Routes
-const Booking = require("./routes/bookings")
-const Complaint = require("./routes/complaints")
-const Comment = require("./routes/comments")
+const Booking = require("./routes/bookings");
+const Complaint = require("./routes/complaints");
+const Comment = require("./routes/comments");
+const Auth = require("./routes/auth");
+const User = require("./routes/user");
 
-app.use(cors())
+app.use(cors());
 const corsOptions = {
-  origin: '*',
+  origin: "*",
   credentials: true,
-  optionSuccessStatus: 200
-}
+  optionSuccessStatus: 200,
+};
 app.use(cors(corsOptions));
-dotenv.config()
-app.use(express.json())
-app.use("/images", express.static(path.join(__dirname, "/images")))
+dotenv.config();
+app.use(express.json());
+app.use("/images", express.static(path.join(__dirname, "/images")));
 // Mongoose
-mongoose.connect(process.env.MONGO_URL)
+mongoose
+  .connect(process.env.MONGO_URL)
   .then(console.log("Connected to Mongo"))
-  .catch(console.error)
+  .catch(console.error);
 // Routes
-app.use("/api/booking", Booking)
-app.use("/api/complaint", Complaint)
-app.use("/api/comment", Comment)
+app.use("/api/booking", Booking);
+app.use("/api/complaint", Complaint);
+app.use("/api/comment", Comment);
+app.use("/api/auth", Auth);
+app.use("/api/users", User);
 
 app.get("*", (req, res) => {
-  res.send("Hello")
-})
+  res.send("Hello");
+});
 
-const port = process.env.PORT || 5000
-app.listen(port, () => console.log("Server Working"))
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log("Server Working"));
